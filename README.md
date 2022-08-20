@@ -1,6 +1,7 @@
 # Sveltekit Cookie Authentication
 Working example of cookie authentication in Sveltekit
 - Working on 1.0.0-next.428  (20th Aug 2022, after breaking changes)
+- Thanks for the ideas and knowledge: https://joyofcode.xyz/sveltekit-authentication-using-cookies
 
 ## Project Setup
 
