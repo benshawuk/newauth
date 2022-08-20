@@ -1,6 +1,10 @@
 // Import DB instance
 import { db } from '$lib/db'
 
+import cuid from 'cuid'
+// Import cookie library
+import * as cookie from 'cookie'
+
 // Bcrypt library
 import * as bcrypt from 'bcrypt'
 
@@ -8,12 +12,6 @@ import * as bcrypt from 'bcrypt'
 /** @type {import('./$types').Action} */
 export async function POST({ request, setHeaders, url, location, error }) {
 	
-	// Define user object
-	let userobj
-	
-	// Set content type to JSON 
-	setHeaders({ 'Content-Type': 'application/json' })
-
 	// Get form data
 	const form = await request.json()
 
@@ -28,8 +26,9 @@ export async function POST({ request, setHeaders, url, location, error }) {
 	})
 
 	// Check if typed password matches the bcrypt password hash
+	let userobj
 	const passwordMatch = dbuser && await bcrypt.compare(form.password, dbuser.passwordHash)
-
+	
 	if (!dbuser || !passwordMatch) {
 
 		// Login failed, user not found or password doesn't match
@@ -49,8 +48,35 @@ export async function POST({ request, setHeaders, url, location, error }) {
 			token: dbuser.userAuthToken,
 			success: true
 		})
+
+
+		// Update cookie token in DB
+		const newToken = cuid()
+		const updateUser = await db.user.update({
+			where: {
+				username: form.username,
+			},
+			data: {
+				userAuthToken: newToken,
+			},
+		})
+
+
+		// Set cookie on client
+		setHeaders({
+			'Set-Cookie': cookie.serialize('session', newToken, {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'strict',
+				secure: process.env.NODE_ENV === 'production',
+			})
+		});  
+
+
+
 	}
 
 	// Return the JSON response
+	setHeaders({ 'Content-Type': 'application/json' })
 	return new Response(userobj);
 }
