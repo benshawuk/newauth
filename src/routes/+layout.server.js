@@ -1,9 +1,6 @@
-/** @type {import('./$types').Get} */
-export async function load({ request, setHeaders, locals, event }) {
-    return {
-      user: locals.user
-    };
-  }
-
-
-
+// Get locals.user and pass it to page store
+export async function load({ locals }) {
+  return {
+    user: locals.user
+  };
+}

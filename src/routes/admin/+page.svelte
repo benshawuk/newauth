@@ -4,11 +4,10 @@ import { page } from '$app/stores';
 
 
 
-<h1>Success!</h1>
-
+<h1>Admin Area</h1>
 
 {#if $page.data.user}
-  <p>Welcome back {$page.data.user}!</p>
+  <p class="loggedin">You are logged in as <b>{$page.data.user}!</b></p>
 {:else}
   <p class="error">Something went wrong...</p>
 {/if}
@@ -18,7 +17,12 @@ import { page } from '$app/stores';
 
 <style>
     h1 {
-        color: green;
+        color: darkorchid;
+    }
+
+    p.loggedin
+    {
+        color: darkgreen;
     }
 
     .error {

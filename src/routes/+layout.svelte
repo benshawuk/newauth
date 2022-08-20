@@ -1,12 +1,22 @@
 <script>
-    import { page } from '$app/stores';
+import { page } from '$app/stores';
 </script>
 
-
-{#if $page.data.user}
-  <p>Hi, {$page.data.user}!</p>
+<nav>
+  {#if $page.data.user}
+    <!-- User Logged In -->
+    <a href="/">Public</a>
+    <a href="/admin">Admin</a>
+    <a href="/logout">Log out</a>
   {:else}
-  <p>You are not logged in.  Please <a href="/login">Log In</a></p>
-{/if}
+  <!-- Not Logged In -->
+  <a href="/">Public</a>
+  <a href="/register">Register</a>
+   <a href="/login">Login</a>
+  {/if}
 
-<slot></slot>
+</nav>
+
+<main>
+  <slot></slot>
+</main>

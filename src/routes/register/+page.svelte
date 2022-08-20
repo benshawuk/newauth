@@ -10,7 +10,7 @@ let error = null
 
 // Async function for passing the form data to the endpoint as JSON
 async function handleSubmit () {
-    const res = await fetch('/auth/login', {
+    const res = await fetch('/auth/register', {
         method: 'POST',
         body: JSON.stringify({
             username,
@@ -33,7 +33,7 @@ async function handleSubmit () {
 
 </script>
 
-<h1>Log In</h1><br>
+<h1>Register</h1><br>
 
 <div class="card">
     <form on:submit|preventDefault={handleSubmit}>
@@ -42,7 +42,8 @@ async function handleSubmit () {
         <input type="text" name="username" bind:value={username}>
         Password:
         <input type="password" name="password" bind:value={password}>
-        <button type="submit">Log In</button>
+
+        <button type="submit">Register</button>
 
     <!-- Display errors -->
     <br><br>
@@ -51,6 +52,7 @@ async function handleSubmit () {
     {:else}
     <p> </p>
     {/if}
+
     </form>
 </div>
 

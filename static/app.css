@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  main {
+    text-align: center;
+  }
+
+  nav {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.2rem;
+  }
+
+  nav a {
+    margin-right: 15px;
+    color: darkslategray;
+    font-size: 1.2rem;
+  }
+
+  nav a:hover {
+    margin-right: 15px;
+    color: green;
+    font-size: 1.2rem;
+  }
+  
+  main h1 {
+    font-size: 3rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  main input {
+    padding: 0.4rem;
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+    font-size: 1.25rem;
+    background-color: white;
+    margin: 0.5rem 0;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+button {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #0d6efd;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+  }
+ 
+  button:hover {
+    background-color: blue;
+    color: white;
+  }
+
+.error {
+    color: tomato;
+    position: absolute;
+    font-size: 1rem;
+  }
+  
+p {
+    font-size: 1.3rem;
+}
+
+.card {
+  width: 320px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  padding: 30px;
+}

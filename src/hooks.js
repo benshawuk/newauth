@@ -14,7 +14,7 @@ export async function handle({ event, resolve }) {
     const Redirect = () => new Response('', {
         status: 303,
         headers: {
-            location: '/'
+            location: '/login'
         }
     })
 
@@ -23,7 +23,7 @@ export async function handle({ event, resolve }) {
     if (!cookies.session) {
 
         // Serverside force redirect on protected route
-        if (event.url.pathname === '/success') {
+        if (event.url.pathname === '/admin') {
             return await Redirect()
         }
         
@@ -43,7 +43,7 @@ export async function handle({ event, resolve }) {
         
         // Cookie isn't valid, or has been tampered with etc.
         // ** Serverside force redirect on protected routes **
-        if (event.url.pathname === '/success') {
+        if (event.url.pathname === '/admin') {
             return await Redirect()
         }
     }

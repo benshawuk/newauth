@@ -3,10 +3,11 @@ import { db } from '$lib/db'
 import cuid from 'cuid'
 import * as cookie from 'cookie'
 import * as bcrypt from 'bcrypt'
+import { json } from "@sveltejs/kit";
 
 
 /** @type {import('./$types').Action} */
-export async function POST({ request, setHeaders, url, location, error }) {
+export async function POST({ request, setHeaders }) {
 	
 	// Get form data
 	const form = await request.json()
@@ -17,42 +18,35 @@ export async function POST({ request, setHeaders, url, location, error }) {
 	}
 
 	// Look for match on user in DB
+	let userobj
 	const dbuser = await db.user.findUnique({
 		where: { username: form.username }
 	})
 
-	// Check if typed password matches the bcrypt password hash
-	let userobj
-	const passwordMatch = dbuser && await bcrypt.compare(form.password, dbuser.passwordHash)
-	
-	if (!dbuser || !passwordMatch) {
+	// Don't allow duplicate users
+	if(dbuser) {
 
 		// Login failed, user not found or password doesn't match
 		userobj = JSON.stringify({
 			"success": false,
-			"error": "Please enter valid credentials"
+			"error": "User already exists"
 		})
 
 	} else {
 
-		// Login success, user found and password matches
+		// Registration successful, return user object
 		userobj = JSON.stringify({
-			id: dbuser.id,
-			username: dbuser.username,
-			fullname: dbuser.fullname,
-			client: dbuser.client,
-			token: dbuser.userAuthToken,
+			username: form.username,
 			success: true
 		})
 
 
-		// Update cookie token in DB
+		// Create new user record and cookie token in DB
 		const newToken = cuid()
-		const updateUser = await db.user.update({
-			where: {
-				username: form.username,
-			},
+		const updateUser = await db.user.create({
 			data: {
+				username: form.username,
+                passwordHash: await bcrypt.hash(form.password, 10),
 				userAuthToken: newToken,
 			},
 		})
