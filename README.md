@@ -19,7 +19,7 @@ npm i
 
 ## Database
 
-✏️ Rename `.env.example` to `.env`
+✏️ Rename `env.example` to `.env`
 
 ```
 DATABASE_URL="file:./dev.db"
