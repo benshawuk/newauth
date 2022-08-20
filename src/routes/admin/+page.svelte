@@ -3,7 +3,6 @@ import { page } from '$app/stores';
 </script>
 
 
-
 <h1>Admin Area</h1>
 
 {#if $page.data.user}
@@ -11,8 +10,6 @@ import { page } from '$app/stores';
 {:else}
   <p class="error">Something went wrong...</p>
 {/if}
-
-
 
 
 <style>

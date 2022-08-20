@@ -1,14 +1,15 @@
-// Import Cookie tools, Cookie UID generator, DB instance
+// Import Cookie tools, DB instance
 import { db } from '$lib/db'
 import cuid from 'cuid'
-import { page } from '$app/stores';
 import * as cookie from 'cookie'
+
 
 // Server get function (log out user)
 export const load = async ({ locals, setHeaders }) => {
 
+    // If not logged in, just redirect to login page
     if (!locals.user) {
-        return { status: 400, error: 'Not logged in' }
+        return { status: 401, error: 'Not logged in' }
     }
 
     // Update cookie token in DB

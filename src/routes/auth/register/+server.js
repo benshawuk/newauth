@@ -1,12 +1,13 @@
 // Import DB instance
 import { db } from '$lib/db'
+
+// Import cookie tools and bcrypt
 import cuid from 'cuid'
 import * as cookie from 'cookie'
 import * as bcrypt from 'bcrypt'
-import { json } from "@sveltejs/kit";
 
 
-/** @type {import('./$types').Action} */
+// Register post request
 export async function POST({ request, setHeaders }) {
 	
 	// Get form data
@@ -25,8 +26,6 @@ export async function POST({ request, setHeaders }) {
 
 	// Don't allow duplicate users
 	if(dbuser) {
-
-		// Login failed, user not found or password doesn't match
 		userobj = JSON.stringify({
 			"success": false,
 			"error": "User already exists"
@@ -40,7 +39,6 @@ export async function POST({ request, setHeaders }) {
 			success: true
 		})
 
-
 		// Create new user record and cookie token in DB
 		const newToken = cuid()
 		const updateUser = await db.user.create({
@@ -51,7 +49,6 @@ export async function POST({ request, setHeaders }) {
 			},
 		})
 
-
 		// Set cookie on client
 		setHeaders({
 			'Set-Cookie': cookie.serialize('session', newToken, {
@@ -60,9 +57,7 @@ export async function POST({ request, setHeaders }) {
 				sameSite: 'strict',
 				secure: process.env.NODE_ENV === 'production',
 			})
-		});  
-
-
+		})
 
 	}
 

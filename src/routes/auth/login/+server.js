@@ -1,12 +1,14 @@
 // Import DB instance
 import { db } from '$lib/db'
+
+// Import cookie tools and bcrypt
 import cuid from 'cuid'
 import * as cookie from 'cookie'
 import * as bcrypt from 'bcrypt'
 
 
-/** @type {import('./$types').Action} */
-export async function POST({ request, setHeaders, url, location, error }) {
+// Login post request
+export async function POST({ request, setHeaders }) {
 	
 	// Get form data
 	const form = await request.json()
